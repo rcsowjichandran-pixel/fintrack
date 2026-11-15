@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101310">
+  <title>Categories — FinTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounting/css/dashboard.css' %}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{% url 'dashboard' %}" aria-label="FinTrack home"><span class="brand-mark"><span></span><span></span><span></span></span><span>fintrack<span class="brand-period">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-item" href="{% url 'dashboard' %}"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-item" href="{% url 'accounting:add_transaction' %}"><span class="nav-icon">＋</span> Add transaction</a>
+        <a class="nav-item active" href="{% url 'accounting:categorize_transactions' %}"><span class="nav-icon">◇</span> Categories <span class="active-dot"></span></a>
+        <a class="nav-item" href="/admin/accounting/transaction/"><span class="nav-icon">↔</span> Transactions</a>
+        <a class="nav-item" href="/admin/accounting/ledger/"><span class="nav-icon">▤</span> Ledger</a>
+        <a class="nav-item" href="/admin/accounting/gst/"><span class="nav-icon">％</span> GST records</a>
+        <a class="nav-item" href="{% url 'accounting:gst_report_options' %}"><span class="nav-icon">▧</span> GST reports</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-card"><div class="help-orbit">✳</div><strong>Good money<br>habits start here.</strong><span>Your books, beautifully balanced.</span></div><a class="nav-item settings-link" href="/admin/"><span class="nav-icon">⚙</span> Admin panel</a><div class="profile"><div class="avatar">FT</div><div><strong>FinTrack workspace</strong><span>Personal account</span></div><span class="profile-menu">···</span></div></div>
+    </aside>
+
+    <main class="main-content category-page">
+      <header class="topbar"><div class="breadcrumbs"><a href="{% url 'dashboard' %}">Workspace</a> <span>/</span> <strong>Categories</strong></div><div class="top-actions"><span class="date-pill"><i></i> ORGANIZE</span><a class="icon-button" href="{% url 'dashboard' %}" aria-label="Back to overview">↗</a></div></header>
+      <section class="page-heading category-heading"><div><p class="eyebrow">MAKE SENSE OF EVERY ENTRY</p><h1>Give it a <span>place.</span></h1><p class="heading-copy">Group your transactions into categories that make sense to you.</p></div><a class="primary-button" href="{% url 'accounting:add_transaction' %}"><span>＋</span> Add transaction <b>↗</b></a></section>
+      {% if messages %}<div class="message-stack">{% for message in messages %}<div class="success-message"><span>✓</span>{{ message }}</div>{% endfor %}</div>{% endif %}
+
+      <section class="category-layout">
+        <article class="panel category-table-panel">
+          <div class="panel-heading"><div><p class="eyebrow">YOUR BOOKS</p><h2>Transactions <span class="count-chip">{{ transactions|length }}</span></h2></div></div>
+          {% if transactions %}
+          <div class="table-scroll"><table class="category-table"><thead><tr><th>TRANSACTION</th><th>DATE</th><th>TYPE</th><th>AMOUNT</th><th>CATEGORY</th><th></th><th>BILL</th></tr></thead><tbody>
+            {% for transaction in transactions %}
+            <tr><td class="table-description">{{ transaction.description|truncatechars:38 }}</td><td class="table-date">{{ transaction.date|date:'M j, Y' }}</td><td><span class="type-chip {% if transaction.type == 'Income' %}type-income{% else %}type-expense{% endif %}">{{ transaction.type }}</span></td><td class="table-amount {% if transaction.type == 'Income' %}amount-income{% else %}amount-expense{% endif %}">{% if transaction.type == 'Income' %}+{% else %}−{% endif %}₹{{ transaction.amount|floatformat:2 }}</td><td colspan="2"><form class="category-row-form" method="post">{% csrf_token %}<input type="hidden" name="transaction_id" value="{{ transaction.pk }}"><label class="visually-hidden" for="category-{{ transaction.pk }}">Category for {{ transaction.description }}</label><select id="category-{{ transaction.pk }}" name="category_id" aria-label="Category for {{ transaction.description }}"><option value="">Uncategorized</option>{% for category in categories %}<option value="{{ category.pk }}"{% if transaction.category_id == category.pk %} selected{% endif %}>{{ category.name }}</option>{% endfor %}</select><button type="submit" class="row-save" title="Save category for this transaction" aria-label="Save category for {{ transaction.description }}">↵</button></form></td><td><a class="bill-link" href="{% url 'accounting:generate_gst_bill' transaction.pk %}" aria-label="Download GST bill for {{ transaction.description }}">PDF ↗</a></td></tr>
+            {% endfor %}
+          </tbody></table></div>
+          {% else %}
+          <div class="category-empty"><div class="empty-art"><span>◇</span><i>✳</i></div><strong>No transactions to organize yet</strong><p>Add a transaction, then come back to assign it a category.</p><a class="primary-button" href="{% url 'accounting:add_transaction' %}"><span>＋</span> Add transaction <b>↗</b></a></div>
+          {% endif %}
+        </article>
+        <aside class="category-aside">
+          <article class="panel new-category-panel"><div class="panel-heading"><div><p class="eyebrow">BUILD YOUR LIST</p><h2>New category</h2></div><span class="category-spark">✳</span></div><p class="category-intro">Create a label for the way you think about your money.</p><form method="post" class="new-category-form">{% csrf_token %}<input type="hidden" name="action" value="add_category"><div class="form-field{% if category_form.name.errors %} has-error{% endif %}"><label for="{{ category_form.name.id_for_label }}">{{ category_form.name.label }}<span class="required-mark">*</span></label>{{ category_form.name }}{% for error in category_form.name.errors %}<small class="field-error">{{ error }}</small>{% endfor %}</div><button class="primary-button" type="submit"><span>＋</span> Create category <b>↗</b></button></form></article>
+          <article class="insight-card category-tip"><div class="insight-top"><span class="insight-star">✳</span><span class="eyebrow">A LITTLE TIP</span></div><h3>Make it<br><em>your system.</em></h3><p>Try labels like food, travel, rent, or freelance. You can change a transaction's category whenever you need.</p><div class="insight-decoration">✳</div></article>
+        </aside>
+      </section>
+      <footer class="footer"><span>Made for a clearer view of your money.</span><span>FINTRACK <i>·</i> ACCOUNTING</span></footer>
+    </main>
+  </div>
+</body>
+</html>

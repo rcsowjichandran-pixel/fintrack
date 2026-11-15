@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101310">
+  <title>GST report — FinTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounting/css/dashboard.css' %}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{% url 'dashboard' %}" aria-label="FinTrack home"><span class="brand-mark"><span></span><span></span><span></span></span><span>fintrack<span class="brand-period">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-item" href="{% url 'dashboard' %}"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-item" href="{% url 'accounting:add_transaction' %}"><span class="nav-icon">＋</span> Add transaction</a>
+        <a class="nav-item" href="{% url 'accounting:categorize_transactions' %}"><span class="nav-icon">◇</span> Categories</a>
+        <a class="nav-item" href="/admin/accounting/transaction/"><span class="nav-icon">↔</span> Transactions</a>
+        <a class="nav-item" href="/admin/accounting/ledger/"><span class="nav-icon">▤</span> Ledger</a>
+        <a class="nav-item active" href="{% url 'accounting:gst_report_options' %}"><span class="nav-icon">▧</span> GST reports <span class="active-dot"></span></a>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-card"><div class="help-orbit">✳</div><strong>Good money<br>habits start here.</strong><span>Your books, beautifully balanced.</span></div><a class="nav-item settings-link" href="/admin/"><span class="nav-icon">⚙</span> Admin panel</a><div class="profile"><div class="avatar">FT</div><div><strong>FinTrack workspace</strong><span>Personal account</span></div><span class="profile-menu">···</span></div></div>
+    </aside>
+
+    <main class="main-content report-page">
+      <header class="topbar"><div class="breadcrumbs"><a href="{% url 'dashboard' %}">Workspace</a> <span>/</span> <strong>GST report</strong></div><div class="top-actions"><span class="date-pill"><i></i> TAX OVERVIEW</span><a class="icon-button" href="{% url 'dashboard' %}" aria-label="Back to overview">↗</a></div></header>
+      <section class="page-heading report-heading"><div><p class="eyebrow">YOUR TAX RECORDS, AT A GLANCE</p><h1>GST, made <span>clear.</span></h1><p class="heading-copy">Choose a period and category, then download a detailed PDF summary.</p></div></section>
+      <section class="report-layout">
+        <article class="panel report-filter-panel"><div class="panel-heading"><div><p class="eyebrow">CUSTOMIZE YOUR REPORT</p><h2>Choose what to include</h2></div><span class="report-icon">▧</span></div>
+          {% if form.non_field_errors %}<div class="form-alert">{{ form.non_field_errors }}</div>{% endif %}
+          <form method="get" action="{% url 'accounting:generate_gst_report' %}" class="report-filter-form">
+            {% for field in form %}<div class="form-field{% if field.errors %} has-error{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}</div>{% endfor %}
+            <button class="primary-button" type="submit"><span>↓</span> Download GST report <b>↗</b></button>
+          </form>
+        </article>
+        <aside class="report-side"><article class="insight-card report-insight"><div class="insight-top"><span class="insight-star">✳</span><span class="eyebrow">INSIDE THE PDF</span></div><h3>Every detail.<br><em>One clear view.</em></h3><p>Transactions with GST records are grouped by month and category for quick review.</p><div class="entry-checklist"><span><i>✓</i> Taxable transaction total</span><span><i>✓</i> GST collected on income</span><span><i>✓</i> GST paid on expenses</span><span><i>✓</i> Net GST summary</span></div><div class="insight-decoration">✳</div></article>
+          <div class="ledger-note"><div class="note-icon">⌁</div><div><strong>Need a single bill?</strong><span>Download it next to a transaction in the list.</span></div></div></aside>
+      </section>
+      <footer class="footer"><span>Made for a clearer view of your money.</span><span>FINTRACK <i>·</i> ACCOUNTING</span></footer>
+    </main>
+  </div>
+</body>
+</html>

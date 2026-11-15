@@ -1,0 +1,603 @@
+[
+  {
+    "model": "accounting.category",
+    "pk": 1,
+    "fields": {
+      "name": "Groceries"
+    }
+  },
+  {
+    "model": "accounting.category",
+    "pk": 2,
+    "fields": {
+      "name": "Salary"
+    }
+  },
+  {
+    "model": "accounting.category",
+    "pk": 3,
+    "fields": {
+      "name": "Travel"
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 1,
+    "fields": {
+      "date": "2025-01-05",
+      "description": "Income sample entry 01",
+      "amount": "48000.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 2,
+    "fields": {
+      "date": "2025-02-05",
+      "description": "Expense sample entry 02",
+      "amount": "1637.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 3,
+    "fields": {
+      "date": "2025-03-05",
+      "description": "Expense sample entry 03",
+      "amount": "1774.00",
+      "type": "Expense",
+      "category": 1
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 4,
+    "fields": {
+      "date": "2025-04-05",
+      "description": "Income sample entry 04",
+      "amount": "51750.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 5,
+    "fields": {
+      "date": "2025-05-05",
+      "description": "Expense sample entry 05",
+      "amount": "2048.00",
+      "type": "Expense",
+      "category": 1
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 6,
+    "fields": {
+      "date": "2025-06-05",
+      "description": "Expense sample entry 06",
+      "amount": "2185.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 7,
+    "fields": {
+      "date": "2025-07-05",
+      "description": "Income sample entry 07",
+      "amount": "55500.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 8,
+    "fields": {
+      "date": "2025-08-05",
+      "description": "Expense sample entry 08",
+      "amount": "2459.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 9,
+    "fields": {
+      "date": "2025-09-05",
+      "description": "Expense sample entry 09",
+      "amount": "2596.00",
+      "type": "Expense",
+      "category": 1
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 10,
+    "fields": {
+      "date": "2025-10-05",
+      "description": "Income sample entry 10",
+      "amount": "59250.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 11,
+    "fields": {
+      "date": "2025-11-05",
+      "description": "Expense sample entry 11",
+      "amount": "2870.00",
+      "type": "Expense",
+      "category": 1
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 12,
+    "fields": {
+      "date": "2025-12-05",
+      "description": "Expense sample entry 12",
+      "amount": "3007.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 13,
+    "fields": {
+      "date": "2025-01-06",
+      "description": "Income sample entry 13",
+      "amount": "63000.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 14,
+    "fields": {
+      "date": "2025-02-06",
+      "description": "Expense sample entry 14",
+      "amount": "3281.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 15,
+    "fields": {
+      "date": "2025-03-06",
+      "description": "Expense sample entry 15",
+      "amount": "3418.00",
+      "type": "Expense",
+      "category": 1
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 16,
+    "fields": {
+      "date": "2025-04-06",
+      "description": "Income sample entry 16",
+      "amount": "66750.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 17,
+    "fields": {
+      "date": "2025-05-06",
+      "description": "Expense sample entry 17",
+      "amount": "3692.00",
+      "type": "Expense",
+      "category": 1
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 18,
+    "fields": {
+      "date": "2025-06-06",
+      "description": "Expense sample entry 18",
+      "amount": "3829.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 19,
+    "fields": {
+      "date": "2025-07-06",
+      "description": "Income sample entry 19",
+      "amount": "70500.00",
+      "type": "Income",
+      "category": 2
+    }
+  },
+  {
+    "model": "accounting.transaction",
+    "pk": 20,
+    "fields": {
+      "date": "2025-08-06",
+      "description": "Expense sample entry 20",
+      "amount": "4103.00",
+      "type": "Expense",
+      "category": 3
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 1,
+    "fields": {
+      "transaction": 1,
+      "gst_percentage": "18.00",
+      "gst_amount": "8640.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 2,
+    "fields": {
+      "transaction": 2,
+      "gst_percentage": "18.00",
+      "gst_amount": "294.66"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 3,
+    "fields": {
+      "transaction": 3,
+      "gst_percentage": "18.00",
+      "gst_amount": "319.32"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 4,
+    "fields": {
+      "transaction": 4,
+      "gst_percentage": "18.00",
+      "gst_amount": "9315.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 5,
+    "fields": {
+      "transaction": 5,
+      "gst_percentage": "18.00",
+      "gst_amount": "368.64"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 6,
+    "fields": {
+      "transaction": 6,
+      "gst_percentage": "18.00",
+      "gst_amount": "393.30"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 7,
+    "fields": {
+      "transaction": 7,
+      "gst_percentage": "18.00",
+      "gst_amount": "9990.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 8,
+    "fields": {
+      "transaction": 8,
+      "gst_percentage": "18.00",
+      "gst_amount": "442.62"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 9,
+    "fields": {
+      "transaction": 9,
+      "gst_percentage": "18.00",
+      "gst_amount": "467.28"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 10,
+    "fields": {
+      "transaction": 10,
+      "gst_percentage": "18.00",
+      "gst_amount": "10665.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 11,
+    "fields": {
+      "transaction": 11,
+      "gst_percentage": "18.00",
+      "gst_amount": "516.60"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 12,
+    "fields": {
+      "transaction": 12,
+      "gst_percentage": "18.00",
+      "gst_amount": "541.26"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 13,
+    "fields": {
+      "transaction": 13,
+      "gst_percentage": "18.00",
+      "gst_amount": "11340.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 14,
+    "fields": {
+      "transaction": 14,
+      "gst_percentage": "18.00",
+      "gst_amount": "590.58"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 15,
+    "fields": {
+      "transaction": 15,
+      "gst_percentage": "18.00",
+      "gst_amount": "615.24"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 16,
+    "fields": {
+      "transaction": 16,
+      "gst_percentage": "18.00",
+      "gst_amount": "12015.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 17,
+    "fields": {
+      "transaction": 17,
+      "gst_percentage": "18.00",
+      "gst_amount": "664.56"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 18,
+    "fields": {
+      "transaction": 18,
+      "gst_percentage": "18.00",
+      "gst_amount": "689.22"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 19,
+    "fields": {
+      "transaction": 19,
+      "gst_percentage": "18.00",
+      "gst_amount": "12690.00"
+    }
+  },
+  {
+    "model": "accounting.gst",
+    "pk": 20,
+    "fields": {
+      "transaction": 20,
+      "gst_percentage": "18.00",
+      "gst_amount": "738.54"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 1,
+    "fields": {
+      "date": "2025-01-05",
+      "transaction": 1,
+      "current_balance": "48000.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 2,
+    "fields": {
+      "date": "2025-02-05",
+      "transaction": 2,
+      "current_balance": "109363.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 3,
+    "fields": {
+      "date": "2025-03-05",
+      "transaction": 3,
+      "current_balance": "104308.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 4,
+    "fields": {
+      "date": "2025-04-05",
+      "transaction": 4,
+      "current_balance": "152640.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 5,
+    "fields": {
+      "date": "2025-05-05",
+      "transaction": 5,
+      "current_balance": "217342.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 6,
+    "fields": {
+      "date": "2025-06-05",
+      "transaction": 6,
+      "current_balance": "211465.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 7,
+    "fields": {
+      "date": "2025-07-05",
+      "transaction": 7,
+      "current_balance": "263136.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 8,
+    "fields": {
+      "date": "2025-08-05",
+      "transaction": 8,
+      "current_balance": "331177.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 9,
+    "fields": {
+      "date": "2025-09-05",
+      "transaction": 9,
+      "current_balance": "324478.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 10,
+    "fields": {
+      "date": "2025-10-05",
+      "transaction": 10,
+      "current_balance": "383728.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 11,
+    "fields": {
+      "date": "2025-11-05",
+      "transaction": 11,
+      "current_balance": "380858.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 12,
+    "fields": {
+      "date": "2025-12-05",
+      "transaction": 12,
+      "current_balance": "377851.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 13,
+    "fields": {
+      "date": "2025-01-06",
+      "transaction": 13,
+      "current_balance": "111000.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 14,
+    "fields": {
+      "date": "2025-02-06",
+      "transaction": 14,
+      "current_balance": "106082.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 15,
+    "fields": {
+      "date": "2025-03-06",
+      "transaction": 15,
+      "current_balance": "100890.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 16,
+    "fields": {
+      "date": "2025-04-06",
+      "transaction": 16,
+      "current_balance": "219390.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 17,
+    "fields": {
+      "date": "2025-05-06",
+      "transaction": 17,
+      "current_balance": "213650.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 18,
+    "fields": {
+      "date": "2025-06-06",
+      "transaction": 18,
+      "current_balance": "207636.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 19,
+    "fields": {
+      "date": "2025-07-06",
+      "transaction": 19,
+      "current_balance": "333636.00"
+    }
+  },
+  {
+    "model": "accounting.ledger",
+    "pk": 20,
+    "fields": {
+      "date": "2025-08-06",
+      "transaction": 20,
+      "current_balance": "327074.00"
+    }
+  }
+]

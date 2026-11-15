@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101310">
+  <title>Add transaction — FinTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounting/css/dashboard.css' %}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{% url 'dashboard' %}" aria-label="FinTrack home"><span class="brand-mark"><span></span><span></span><span></span></span><span>fintrack<span class="brand-period">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-item" href="{% url 'dashboard' %}"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-item active" href="{% url 'accounting:add_transaction' %}"><span class="nav-icon">＋</span> Add transaction <span class="active-dot"></span></a>
+        <a class="nav-item" href="{% url 'accounting:categorize_transactions' %}"><span class="nav-icon">◇</span> Categories</a>
+        <a class="nav-item" href="/admin/accounting/transaction/"><span class="nav-icon">↔</span> Transactions</a>
+        <a class="nav-item" href="/admin/accounting/ledger/"><span class="nav-icon">▤</span> Ledger</a>
+        <a class="nav-item" href="/admin/accounting/gst/"><span class="nav-icon">％</span> GST records</a>
+        <a class="nav-item" href="{% url 'accounting:gst_report_options' %}"><span class="nav-icon">▧</span> GST reports</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-card"><div class="help-orbit">✳</div><strong>Good money<br>habits start here.</strong><span>Your books, beautifully balanced.</span></div><a class="nav-item settings-link" href="/admin/"><span class="nav-icon">⚙</span> Admin panel</a><div class="profile"><div class="avatar">FT</div><div><strong>FinTrack workspace</strong><span>Personal account</span></div><span class="profile-menu">···</span></div></div>
+    </aside>
+
+    <main class="main-content form-page">
+      <header class="topbar"><div class="breadcrumbs"><a href="{% url 'dashboard' %}">Workspace</a> <span>/</span> <strong>Add transaction</strong></div><div class="top-actions"><span class="date-pill"><i></i> NEW ENTRY</span><a class="icon-button" href="{% url 'dashboard' %}" aria-label="Back to overview">↗</a></div></header>
+      <section class="page-heading form-heading"><div><p class="eyebrow">A FRESH ENTRY</p><h1>Log a <span>transaction.</span></h1><p class="heading-copy">Capture the details now. Your ledger will take care of the rest.</p></div></section>
+
+      <section class="entry-layout">
+        <article class="panel entry-panel">
+          <div class="panel-heading"><div><p class="eyebrow">TRANSACTION DETAILS</p><h2>What happened?</h2></div><span class="entry-step">01 <i>/</i> 01</span></div>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="form-alert">{{ form.non_field_errors }}</div>{% endif %}
+            <div class="entry-fields">
+              {% for field in form %}
+              <div class="form-field{% if field.name == 'description' %} field-wide{% endif %}{% if field.errors %} has-error{% endif %}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required-mark">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.name == 'category' %}<small class="field-help">Need a new label? <a class="inline-link" href="{% url 'accounting:categorize_transactions' %}">Create a category</a>.</small>{% endif %}
+                {% if field.help_text %}<small class="field-help">{{ field.help_text }}</small>{% endif %}
+                {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+          <div class="gst-callout"><span class="gst-icon">％</span><div><strong>GST is calculated automatically</strong><span>{{ gst_rate }}% GST will be recorded with this entry.</span></div><span class="gst-badge">{{ gst_rate }}%</span></div>
+            <div class="form-actions"><a class="cancel-link" href="{% url 'dashboard' %}">Cancel</a><button class="primary-button" type="submit"><span>＋</span> Save transaction <b>↗</b></button></div>
+          </form>
+        </article>
+        <aside class="entry-aside"><article class="insight-card entry-note"><div class="insight-top"><span class="insight-star">✳</span><span class="eyebrow">AFTER YOU SAVE</span></div><h3>Everything<br><em>in its place.</em></h3><p>Your transaction, GST record, and running ledger balance will update together.</p><div class="entry-checklist"><span><i>✓</i> Transaction recorded</span><span><i>✓</i> GST calculated at {{ gst_rate }}%</span><span><i>✓</i> Ledger balance refreshed</span></div><div class="insight-decoration">✳</div></article>
+          <div class="ledger-note"><div class="note-icon">⌁</div><div><strong>Your records stay connected</strong><span>GST and ledger entries link to this transaction.</span></div></div>
+        </aside>
+      </section>
+      <footer class="footer"><span>Made for a clearer view of your money.</span><span>FINTRACK <i>·</i> ACCOUNTING</span></footer>
+    </main>
+  </div>
+</body>
+</html>

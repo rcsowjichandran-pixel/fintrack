@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101310">
+  <title>Financial insights — FinTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounting/css/dashboard.css' %}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{% url 'dashboard' %}" aria-label="FinTrack home"><span class="brand-mark"><span></span><span></span><span></span></span><span>fintrack<span class="brand-period">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-item" href="{% url 'dashboard' %}"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-item" href="{% url 'accounting:add_transaction' %}"><span class="nav-icon">＋</span> Add transaction</a>
+        <a class="nav-item" href="{% url 'accounting:categorize_transactions' %}"><span class="nav-icon">◇</span> Categories</a>
+        <a class="nav-item" href="{% url 'accounting:gst_report_options' %}"><span class="nav-icon">▧</span> GST reports</a>
+        <a class="nav-item active" href="{% url 'accounting:predictive_analytics' %}"><span class="nav-icon">⌁</span> Financial insights <span class="active-dot"></span></a>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-card"><div class="help-orbit">✳</div><strong>Good money<br>habits start here.</strong><span>Your books, beautifully balanced.</span></div><a class="nav-item settings-link" href="/admin/"><span class="nav-icon">⚙</span> Admin panel</a><div class="profile"><div class="avatar">FT</div><div><strong>FinTrack workspace</strong><span>Personal account</span></div><span class="profile-menu">···</span></div></div>
+    </aside>
+
+    <main class="main-content analytics-page">
+      <header class="topbar"><div class="breadcrumbs"><a href="{% url 'dashboard' %}">Workspace</a> <span>/</span> <strong>Financial insights</strong></div><div class="top-actions"><span class="date-pill"><i></i> 24 MONTH VIEW</span><a class="icon-button" href="{% url 'dashboard' %}" aria-label="Back to overview">↗</a></div></header>
+      <section class="page-heading analytics-heading"><div><p class="eyebrow">A FORWARD LOOK AT YOUR FINANCES</p><h1>See what's <span>ahead.</span></h1><p class="heading-copy">Historical trends and a six-month outlook based on your transaction records.</p></div><a class="secondary-button refresh-link" href="{% url 'accounting:predictive_analytics' %}">Refresh analysis <span>↻</span></a></section>
+
+      {% if error %}<div class="analytics-alert"><span>!</span><div><strong>Insights are unavailable</strong><p>{{ error }}</p></div></div>{% endif %}
+
+      <section class="analytics-chart panel"><div class="panel-heading"><div><p class="eyebrow">INCOME & SPENDING</p><h2>Monthly trend <span class="chart-caption">Historical and predicted (INR)</span></h2></div><span class="chart-period">LAST 24 MONTHS + FORECAST</span></div><div class="chart-wrap"><canvas id="financeChart" aria-label="Chart of historical and predicted monthly income and expenses"></canvas></div><div class="chart-legend"><span><i class="legend-income"></i> Income</span><span><i class="legend-expenses"></i> Expenses</span><span><i class="legend-forecast"></i> Forecast</span></div></section>
+
+      {% if predictions or insights or recommendations %}<section class="analytics-results">
+        {% if predictions %}<article class="panel forecast-panel"><div class="panel-heading"><div><p class="eyebrow">THE NEXT SIX MONTHS</p><h2>AI forecast</h2></div><span class="insight-star">✳</span></div><div class="forecast-grid">{% for prediction in predictions %}<div class="forecast-card"><span>{{ prediction.month }}</span><strong>INR {{ prediction.projected_expense|floatformat:2 }}</strong><small>projected expenses</small><div class="forecast-income">Income · INR {{ prediction.projected_income|floatformat:2 }}</div></div>{% endfor %}</div></article>{% endif %}
+        <div class="analysis-lists">
+          {% if insights %}<article class="panel analysis-list"><div class="panel-heading"><div><p class="eyebrow">WHAT STANDS OUT</p><h2>Insights</h2></div><span class="list-symbol">↗</span></div><ul>{% for insight in insights %}<li>{{ insight }}</li>{% endfor %}</ul></article>{% endif %}
+          {% if recommendations %}<article class="panel analysis-list recommendations-list"><div class="panel-heading"><div><p class="eyebrow">PRACTICAL NEXT STEPS</p><h2>Recommendations</h2></div><span class="list-symbol">✳</span></div><ul>{% for recommendation in recommendations %}<li>{{ recommendation }}</li>{% endfor %}</ul></article>{% endif %}
+        </div>
+      </section>{% elif not error %}<div class="analytics-alert"><span>i</span><div><strong>No analysis to show</strong><p>Add transactions to build a history for the forecast.</p></div></div>{% endif %}
+
+      <p class="analytics-disclaimer">Predictions are estimates from historical patterns, not guaranteed outcomes or financial advice.</p>
+      <footer class="footer"><span>Made for a clearer view of your money.</span><span>FINTRACK <i>·</i> ACCOUNTING</span></footer>
+    </main>
+  </div>
+  {{ chart_data|json_script:"analytics-chart-data" }}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>
+    (() => {
+      const data = JSON.parse(document.getElementById('analytics-chart-data').textContent);
+      const canvas = document.getElementById('financeChart');
+      if (!canvas || typeof Chart === 'undefined') return;
+      const context = canvas.getContext('2d');
+      const gradient = context.createLinearGradient(0, 0, 0, 280);
+      gradient.addColorStop(0, 'rgba(200,243,106,.14)');
+      gradient.addColorStop(1, 'rgba(200,243,106,0)');
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: data.labels,
+          datasets: [
+            { label: 'Income', data: data.historyIncome, borderColor: '#a9e879', backgroundColor: gradient, fill: true, tension: .32, pointRadius: 2, pointHoverRadius: 5, borderWidth: 2, spanGaps: false },
+            { label: 'Expenses', data: data.historyExpenses, borderColor: '#ff988b', backgroundColor: 'transparent', tension: .32, pointRadius: 2, pointHoverRadius: 5, borderWidth: 2, spanGaps: false },
+            { label: 'Income forecast', data: data.projectedIncome, borderColor: '#a9e879', backgroundColor: 'transparent', borderDash: [6, 5], tension: .32, pointRadius: 2, borderWidth: 2, spanGaps: false },
+            { label: 'Expense forecast', data: data.projectedExpenses, borderColor: '#ff988b', backgroundColor: 'transparent', borderDash: [6, 5], tension: .32, pointRadius: 2, borderWidth: 2, spanGaps: false }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: item => `${item.dataset.label}: INR ${Number(item.raw).toLocaleString('en-IN', { maximumFractionDigits: 2 })}` } } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,.035)' }, ticks: { color: '#858d82', maxTicksLimit: 12, maxRotation: 0 } },
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,.07)' }, ticks: { color: '#858d82', callback: value => `INR ${Number(value).toLocaleString('en-IN')}` } }
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
