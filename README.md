@@ -37,4 +37,6 @@ $env:GEMINI_API_KEY = "your-Gemini-API-key"
 docker compose up --build
 ```
 
-The container runs migrations and collects static files before starting Gunicorn. SQLite data is kept in the `fintrack_data` volume. Configure the allowed hosts and CSRF trusted origins for the hosting domain before publishing the service. For a TLS host, remove the Compose overrides for `DJANGO_SECURE_SSL_REDIRECT`, `DJANGO_SESSION_COOKIE_SECURE`, and `DJANGO_CSRF_COOKIE_SECURE`, and set `DJANGO_SECURE_HSTS_SECONDS` to an appropriate value. Configure the SMTP environment variables if the app needs to send email.
+The container runs migrations and collects static files before starting Gunicorn. SQLite data is kept in the `fintrack_data` volume at `/app/data/db.sqlite3`. The container listens on `PORT` (8000 in Compose; hosting platforms can supply their own port).
+
+For a Render deployment using SQLite, create a Docker Web Service from this GitHub repository and attach a persistent disk mounted at `/app/data`. Render services have an ephemeral filesystem by default, and persistent disks require a paid web service. Set `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS` to the service hostname, `DJANGO_CSRF_TRUSTED_ORIGINS` to its HTTPS origin, and optionally `GEMINI_API_KEY`. For a TLS host, set `DJANGO_SECURE_SSL_REDIRECT=True`, `DJANGO_SESSION_COOKIE_SECURE=True`, `DJANGO_CSRF_COOKIE_SECURE=True`, and `DJANGO_SECURE_HSTS_SECONDS` to an appropriate value. Configure the SMTP environment variables if the app needs to send email.
